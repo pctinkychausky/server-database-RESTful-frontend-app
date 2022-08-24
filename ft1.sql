@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 24, 2022 at 06:18 PM
+-- Generation Time: Aug 25, 2022 at 01:02 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 7.4.29
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `app_spark`
+-- Database: `ft1`
 --
 
 -- --------------------------------------------------------
@@ -77,6 +77,20 @@ CREATE TABLE `likes` (
 CREATE TABLE `log_login` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL COMMENT 'id from the users table',
+  `entry_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `messages`
+--
+
+CREATE TABLE `messages` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `foreign_id` int(11) NOT NULL,
+  `content` varchar(512) NOT NULL,
   `entry_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -143,6 +157,19 @@ CREATE TABLE `seen` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `token`
+--
+
+CREATE TABLE `token` (
+  `id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `token` varchar(128) NOT NULL,
+  `entry_date` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -160,7 +187,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `type`, `status`, `entry_date`) VALUES
-(1, 'a@b.c', '', 2, 1, '2022-08-24 15:18:24');
+(11, 'a1asdasda111@b.aasdasdasd1241421ec', '', 2, 1, '2022-08-24 20:58:57');
 
 -- --------------------------------------------------------
 
@@ -274,6 +301,12 @@ ALTER TABLE `log_login`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `messages`
+--
+ALTER TABLE `messages`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `preferences`
 --
 ALTER TABLE `preferences`
@@ -292,10 +325,17 @@ ALTER TABLE `seen`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `token`
+--
+ALTER TABLE `token`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
 
 --
 -- Indexes for table `users_preferences_ages`
@@ -356,6 +396,12 @@ ALTER TABLE `log_login`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `messages`
+--
+ALTER TABLE `messages`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `preferences`
 --
 ALTER TABLE `preferences`
@@ -374,10 +420,16 @@ ALTER TABLE `seen`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `token`
+--
+ALTER TABLE `token`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'user ID', AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'user ID', AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `users_preferences_ages`
